@@ -1,0 +1,63 @@
+PREFIX=.
+
+BIN=rtpapa
+
+LIBPATH=
+INCLUDE_PATH=
+THIRD_PARTY_PATH=/home/zhangjun-s/Projects/o2oserver/third_party/Linux
+
+GLIB_PATH=$(THIRD_PARTY_PATH)
+ZMQ_PATH=$(THIRD_PARTY_PATH)
+EVENT_PATH=/home/zhangjun-s/opt
+
+GLIB_CFLAGS=-I$(GLIB_PATH)/include/glib-2.0 -I$(GLIB_PATH)/lib/glib-2.0/include
+GLIB_LIBS=-L$(GLIB_PATH)/lib -lglib-2.0
+GTHREAD_LIBS=-pthread -lgthread-2.0 -lrt -lglib-2.0
+
+EVENT_LIBS=-L$(EVENT_PATH)/lib -levent
+EVENT_CFLAGS=-I$(EVENT_PATH)/include
+
+ZMQ_LIBS=-L$(ZMQ_PATH)/lib -lczmq
+ZMQ_CFLAGS=-I$(ZMQ_PATH)/include -Izguide/examples/C
+
+LIBS:=$(GLIB_LIBS) $(GTHREAD_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
+
+INCLUDE=$(GLIB_CFLAGS) $(EVENT_CFLAGS) $(ZMQ_CFLAGS)
+
+CFLAGS= -std=gnu99 -g -Wall $(INCLUDE)
+
+INSTALL=/usr/bin/install -c
+
+LDFLAGS= -Wl,-R$(THIRD_PARTY_PATH)/lib -Wl,-R$(EVENT_PATH)/lib
+
+CC=gcc
+
+SOURCE=rtpapa.c
+OBJS:=$(patsubst %.c, %.o, $(SOURCE))
+DEPS:=$(patsubst %.o, %.d, $(OBJS))
+
+CPPFLAGS += -MMD
+
+.PHONY: all deps objs clean
+
+all: $(BIN)
+
+deps: $(DEPS)
+
+objs: $(OJBS)
+
+-include $(DEPS)
+
+$(BIN): $(OBJS)
+	$(CC) $(LDFLAGS) -o $(BIN) $(OBJS) $(LIBS)
+		
+clean:
+	@$(RM) $(OBJS) $(DEPS) $(BIN)
+
+test:
+	./$(BIN)
+
+install:
+	if test ! -d $(PREFIX)/bin;then mkdir -p $(PREFIX)/bin;fi
+	$(INSTALL) $(BIN) $(PREFIX)/bin/
+
