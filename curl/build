@@ -1,0 +1,2 @@
+gcc -o post post-callback.c -I/home/zhangjun-s/opt/curl/include -L/home/zhangjun-s/opt/curl/lib -lcurl -Wl,-R/home/zhangjun-s/opt/curl/lib
+gcc -o postit postit2.c -I/home/zhangjun-s/opt/curl/include -L/home/zhangjun-s/opt/curl/lib -lcurl -Wl,-R/home/zhangjun-s/opt/curl/lib
