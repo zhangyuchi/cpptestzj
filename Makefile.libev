@@ -1,0 +1,59 @@
+PREFIX=.
+
+BIN=testlibev
+
+LIBPATH=
+INCLUDE_PATH=
+THIRD_PARTY_PATH=../o2oserver/third_party/Linux
+
+GLIB_PATH=$(THIRD_PARTY_PATH)
+EVENT_PATH=/home/zhangjun-s/opt/ev
+
+GLIB_CFLAGS=-I$(GLIB_PATH)/include/glib-2.0 -I$(GLIB_PATH)/lib/glib-2.0/include
+GLIB_LIBS=-L$(GLIB_PATH)/lib -lglib-2.0
+GTHREAD_LIBS=-pthread -lgthread-2.0 -lrt -lglib-2.0
+
+EV_LIBS=-L$(EVENT_PATH)/lib -lev
+EV_CFLAGS=-I$(EVENT_PATH)/include
+
+LIBS:=$(GLIB_LIBS) $(GTHREAD_LIBS) $(EV_LIBS)
+
+INCLUDE=$(GLIB_CFLAGS) $(EV_CFLAGS) 
+
+CFLAGS= -std=gnu99 -g -Wall -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings -Wsign-compare -Winvalid-pch -fms-extensions -O3 $(INCLUDE)
+
+INSTALL=/usr/bin/install -c
+
+LDFLAGS= -Wl,-R$(THIRD_PARTY_PATH)/lib -Wl,-R$(EVENT_PATH)/lib
+
+CC=gcc
+
+SOURCE=testlibev.c
+OBJS:=$(patsubst %.c, %.o, $(SOURCE))
+DEPS:=$(patsubst %.o, %.d, $(OBJS))
+
+CPPFLAGS += -MMD
+
+.PHONY: all deps objs clean
+
+all: $(BIN)
+
+deps: $(DEPS)
+
+objs: $(OJBS)
+
+-include $(DEPS)
+
+$(BIN): $(OBJS)
+	$(CC) $(LDFLAGS) -o $(BIN) $(OBJS) $(LIBS)
+		
+clean:
+	@$(RM) $(OBJS) $(DEPS) $(BIN)
+
+test:
+	./$(BIN)
+
+install:
+	if test ! -d $(PREFIX)/bin;then mkdir -p $(PREFIX)/bin;fi
+	$(INSTALL) $(BIN) $(PREFIX)/bin/
+
