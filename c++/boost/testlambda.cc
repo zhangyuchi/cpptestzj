@@ -5,23 +5,11 @@
 #include <list>
 #include <algorithm>
 #include <iostream>
+#include <boost/lexical_cast.hpp>
+#include <boost/shared_ptr.hpp>
+#include "testlambda.hpp"
 
-using namespace std;
-using namespace boost::lambda;
-
-template <typename T>
-ostream & operator<<(ostream &os, const list<T>& v )  
-{  
-    os<<"[";
-    BOOST_FOREACH(T i, v)
-    {
-        os<<i<<",";
-    }  
-
-    os<<"]";
-    return os;  
-} 
-
+using namespace boost;
 int add(int n)
 {
     return n+1;
@@ -38,6 +26,18 @@ public:
     
     void set_j(int x) const { j = x; }; 
 };
+
+template<class T>
+list<shared_ptr<B<T> > > B<T>::blist_;
+
+template<class T>
+ostream & operator<<(ostream &os, const B<T>& b )
+{
+    os<<"B<T>(";
+	os<<b.id_;
+    os<<")";
+    return os;
+}
 
 
 int main()
@@ -68,6 +68,31 @@ int main()
     int index=0;
     for_each(v.begin(), v.end(), (cout << ++var(index) << ':' << _1 << ';'));
     cout << endl;
+
+	cout<<"begin test lambda"<<endl;
+	//list<shared_ptr<B<int> > > blist;
+
+ 	try 
+	{  
+		int c = lexical_cast<int>("wrong number");  
+	}  
+	catch(bad_lexical_cast & e)  
+	{  
+	    printf("%s\r\n", e.what());  
+	}  
+
+	shared_ptr<B<int> > pb1;
+
+	for(i=0; i<10; ++i)
+	{
+		shared_ptr<B<int> > pb(new B<int>(lexical_cast<std::string>(i) ));
+		pb->start();
+		if ( 4 == i)
+			pb1 = pb;
+	}
+
+	cout<<*pb1<<endl;	
+	pb1->stop();
 
     return 0;
 }
