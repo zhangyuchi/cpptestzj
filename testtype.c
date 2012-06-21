@@ -2,6 +2,8 @@
 #include <inttypes.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
+#include <stdbool.h>
 
 typedef struct {
 	unsigned flag1:1; //表示位段，flag1只占1bit
@@ -89,6 +91,12 @@ int main()
 	printf("init f = %f\n", f);
 	printnum(ceilf(f));	
 	printnum(floorf(f));	
+
+	time_t now;
+	printf("time_t size is %ld\n", sizeof(now) );
+
+	bool Bs;
+	printf("bool size is %ld\n", sizeof(Bs) );
 
 	return 0; 
 }
