@@ -94,6 +94,17 @@ int main()
 	cout<<*pb1<<endl;	
 	pb1->stop();
 
+	try 
+	{  
+        std::string strn = "423";
+		uint8_t msgset = lexical_cast<uint8_t>(strn);  
+        printf("msgset is %d\n", msgset);
+	}  
+	catch(bad_lexical_cast & e)  
+	{  
+	    printf("%s\r\n", e.what());  
+	}  
+    
     return 0;
 }
 
