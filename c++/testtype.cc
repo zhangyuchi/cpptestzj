@@ -28,6 +28,11 @@ int main()
 
     std::cout<<"bool size is "<<sizeof(bool)<<std::endl;
 
+    std::cout<<"0x02 size is "<<sizeof(0x02)<<std::endl;    
+    std::cout<<"0x02L size is "<<sizeof(0x02L)<<std::endl;    
+
+    uint64_t n = 0x01L;    
+
 	return 0;
 }
 
