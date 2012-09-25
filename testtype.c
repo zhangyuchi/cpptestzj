@@ -98,6 +98,11 @@ int main()
 	bool Bs;
 	printf("bool size is %ld\n", sizeof(Bs) );
 
+    int nullsize = 0;
+    char nullbuf[nullsize];
+
+    printf("nullbuf size is %ld\n", sizeof(nullbuf) );
+
 	return 0; 
 }
 
