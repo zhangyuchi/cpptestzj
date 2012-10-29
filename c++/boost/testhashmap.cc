@@ -24,8 +24,8 @@
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/shared_ptr.hpp>
 
-//typedef std::tr1::unordered_map<std::string, std::string> StrMap;
-typedef hash_strmap<std::string> StrMap;
+typedef std::tr1::unordered_map<std::string, std::string> StrMap;
+//typedef hash_strmap<std::string> StrMap;
 
 class Entity
 {
@@ -181,13 +181,13 @@ int main()
 
     for(int i=0; i<20; ++i)
     {
-        gt[i].set_start(i*10000);
-        gt[i].run();         
+        it[i].stop();                 
     }
 
     for(int i=0; i<20; ++i)
     {
-        it[i].stop();                 
+        gt[i].set_start(i*10000);
+        gt[i].run();         
     }
 
     for(int i=0; i<20; ++i)
