@@ -20,8 +20,8 @@
 #include "glib.h"
 
 typedef struct{ 
-	int sockfd;
-	struct event ev_read;
+    int sockfd;
+    struct event ev_read;
     struct event ev_write;
 
     struct evbuffer *input;
@@ -31,13 +31,13 @@ typedef struct{
 
 typedef struct 
 {
-	struct event ev_timeout;
-	struct timeval tv;
+    struct event ev_timeout;
+    struct timeval tv;
 } time_slot_t;
 
 connection_t *conn_new()
 {
-	connection_t *conn = NULL;
+    connection_t *conn = NULL;
 
     conn = calloc (1, sizeof  (connection_t));
     if (conn == NULL)
@@ -110,56 +110,56 @@ int create_socket(const char* ip, int port, int type)
 
 void timeout_cb (int sockfd, short event, void* arg)
 {
-	int fd=0;
-	connection_t *conn = NULL;
-	printf("%p  %d :timer timeout %d\n", arg, fd, event);
+    int fd=0;
+    connection_t *conn = NULL;
+    printf("%p  %d :timer timeout %d\n", arg, fd, event);
 
-	if ( arg ){
-		time_slot_t *ts = (time_slot_t *)arg;
-		ts->tv.tv_sec=1;
-		ts->tv.tv_usec=0;
-		//evtimer_set(&ts->ev_timeout, timeout_cb, ts /*&ev_timeout*/);
-		evtimer_add(&ts->ev_timeout, &ts->tv);
-	}
+    if ( arg ){
+        time_slot_t *ts = (time_slot_t *)arg;
+        ts->tv.tv_sec=1;
+        ts->tv.tv_usec=0;
+        //evtimer_set(&ts->ev_timeout, timeout_cb, ts /*&ev_timeout*/);
+        evtimer_add(&ts->ev_timeout, &ts->tv);
+    }
 
 }
 
 void conn_input (int sockfd, short event, void* arg)
 {
-	g_print("%d :conn input %d\n", sockfd, event);
+    g_print("%d :conn input %d\n", sockfd, event);
 
-	connection_t *conn = NULL;
+    connection_t *conn = NULL;
 
     if ( arg ){
         conn = (connection_t *)arg;
     }
 
-	if ( EV_TIMEOUT == event )
-	{
-		printf("arg is %p, timeout\n", arg);
-		event_add (&conn->ev_read, NULL);
+    if ( EV_TIMEOUT == event )
+    {
+        printf("arg is %p, timeout\n", arg);
+        event_add (&conn->ev_read, NULL);
     	timeout_add(&conn->ev_read, &conn->tv);
-	}
+    }
 
-	if ( EV_READ == event)
-	{
-		printf("arg is %p, read data\n", arg);
-		event_add (&conn->ev_read, NULL);
+    if ( EV_READ == event)
+    {
+        printf("arg is %p, read data\n", arg);
+        event_add (&conn->ev_read, NULL);
     	timeout_add(&conn->ev_read, &conn->tv);
-		evbuffer_read(conn->input, conn->sockfd, 256);
-	}
+        evbuffer_read(conn->input, conn->sockfd, 256);
+    }
 
 }
 
 void conn_accept (int sockfd, short event, void* arg)
 {
-	if(event == EV_TIMEOUT)
-	{
-		g_print("%d :accept timeout %d\n", sockfd, event);
-		return;
-	}
+    if(event == EV_TIMEOUT)
+    {
+        g_print("%d :accept timeout %d\n", sockfd, event);
+        return;
+    }
 
-	g_print("%d :accept %d\n", sockfd, event);
+    g_print("%d :accept %d\n", sockfd, event);
     struct sockaddr_in cliaddr;
 
     g_print("%s(): fd = %d, event = %d.\n", __func__, sockfd, event);
@@ -174,11 +174,11 @@ void conn_accept (int sockfd, short event, void* arg)
         return;
     }
 
-	connection_t *conn = conn_new(); 
+    connection_t *conn = conn_new(); 
 
-	conn->sockfd = connfd;
+    conn->sockfd = connfd;
 
-	conn->tv.tv_sec = 5;
+    conn->tv.tv_sec = 5;
     //timeout_set(&conn->ev_read, timeout_cb, conn);
     event_set(&conn->ev_read, connfd, EV_READ, conn_input, conn);
     if (event_add (&conn->ev_read, NULL) == -1)
@@ -199,32 +199,32 @@ int main ()
 
     g_print("server_proc_main init .\n");
 
-	int listenfd = create_socket( NULL, 9009, SOCK_STREAM);
+    int listenfd = create_socket( NULL, 9009, SOCK_STREAM);
     if (listenfd < 0)
     {
         g_print("tcp_listen failed!\n");
         return -1;
     }	
 
-	g_print("listenfd is %d\n", listenfd);
+    g_print("listenfd is %d\n", listenfd);
     // initialize libevent.
     event_init ();
 
     /* We now have a listeing socket, we create a read event to
      * be notified when a client connects. */
-	time_slot_t *ts = (time_slot_t *)calloc(1,sizeof(time_slot_t));
+    time_slot_t *ts = (time_slot_t *)calloc(1,sizeof(time_slot_t));
 
-	ts->tv.tv_sec=1;
-	ts->tv.tv_usec=0;
-	evtimer_set(&ts->ev_timeout, timeout_cb, ts /*&ev_timeout*/);
-	evtimer_add(&ts->ev_timeout, &ts->tv);
+    ts->tv.tv_sec=1;
+    ts->tv.tv_usec=0;
+    evtimer_set(&ts->ev_timeout, timeout_cb, ts /*&ev_timeout*/);
+    evtimer_add(&ts->ev_timeout, &ts->tv);
     
-	event_set (&ev_accept, listenfd, EV_READ | EV_PERSIST,
-             	conn_accept, NULL);
+    event_set (&ev_accept, listenfd, EV_READ | EV_PERSIST,
+               conn_accept, NULL);
 
-   	struct timeval tvaccept;
-	tvaccept.tv_sec=3;
-	tvaccept.tv_usec=3;
+    struct timeval tvaccept;
+    tvaccept.tv_sec=3;
+    tvaccept.tv_usec=3;
 
     event_add (&ev_accept, &tvaccept);
 
