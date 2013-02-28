@@ -2,6 +2,7 @@
 
 #include <boost/bind.hpp>
 #include <boost/coroutine/all.hpp>
+#include <boost/foreach.hpp>
 
 typedef boost::coroutines::coroutine< int() >       coro_t;
 typedef boost::range_iterator< coro_t >::type       iterator_t;
@@ -28,3 +29,4 @@ int main()
 
     return EXIT_SUCCESS;
 }
+
