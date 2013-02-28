@@ -25,6 +25,8 @@ int main()
     for ( iterator_t i( boost::begin( c) ); i != e; ++i)
         std::cout << * i <<  " ";
 
+    BOOST_FOREACH( int i, c){ std::cout << "bf:" << i <<  " "; }
+
     std::cout << "\nDone" << std::endl;
 
     return EXIT_SUCCESS;
