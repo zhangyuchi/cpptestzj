@@ -18,6 +18,17 @@ void power( coro_t::caller_type & ca, int number, int exponent)
     }
 }
 
+void nature( coro_t::caller_type & ca)
+{
+    int diff = 1;
+    int result = 0;
+    while (1)
+    {
+        result = result + diff;
+        ca( result);
+    }
+}
+
 int main()
 {
     coro_t c( boost::bind( power, _1, 2, 8) );
