@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
+
 struct userinfo
 {
     uint32_t tim; 
@@ -19,19 +21,23 @@ struct ConnToGroupDataUserListResp
     uint16_t dcmd; //dcmd=26
     uint8_t  result;
     //uint32_t user_vec_len;
-    std::vector<struct userinfo> user_vec;
+    vector<struct userinfo> user_vec;
 };
 
 int main()
 {
 	struct ConnToGroupDataUserListResp cg;
 
-    std::cout<<"bool size is "<<sizeof(bool)<<std::endl;
+    cout<<"bool size is "<<sizeof(bool)<<endl;
 
-    std::cout<<"0x02 size is "<<sizeof(0x02)<<std::endl;    
-    std::cout<<"0x02L size is "<<sizeof(0x02L)<<std::endl;    
+    cout<<"0x02 size is "<<sizeof(0x02)<<endl;    
+    cout<<"0x02L size is "<<sizeof(0x02L)<<endl;    
 
-    uint64_t n = 0x01L;    
+    uint64_t n64 = 0x01L;    
+    uint32_t n32 = 123;
+
+    cout<<"size_t(n64) = "<<size_t(n64)<<endl;
+    cout<<"size_t(n32) = "<<size_t(n32)<<endl;
 
 	return 0;
 }
