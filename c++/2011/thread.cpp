@@ -6,14 +6,17 @@ using namespace std;
 
 mutex m;
 
-void run(size_t n){
+void run(size_t n)
+{
     m.lock();
     for (size_t i = 0; i < 5; ++i){
         cout << n << ": " << i << endl;
     }
     m.unlock();
 }
-int main(){
+
+int main()
+{
     thread t1(run, 1);
     thread t2(run, 2);
     thread t3(run, 3);
