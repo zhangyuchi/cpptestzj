@@ -28,6 +28,7 @@ DEBUG_FLAGS := \
     -D__DEBUG 
 
 LDFLAGS += \
+	-static-libstdc++ -static-libgcc \
     -fmerge-all-constants \
 	-L${CXX11_HOME}/lib64 
 
