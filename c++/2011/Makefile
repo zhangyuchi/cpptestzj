@@ -29,7 +29,6 @@ DEBUG_FLAGS := \
 
 LDFLAGS += \
     -fmerge-all-constants \
-	-L${CXX11_HOME}/lib \
 	-L${CXX11_HOME}/lib64 
 
 LIBS := \
@@ -46,7 +45,7 @@ CXX := ${CXX11_HOME}/bin/g++
 
 LD_LIBRARY_PATH=/home/zhangjun-s/opt/gcc/lib:/home/zhangjun-s/opt/gcc/lib64:$(DEFAULT_LIB_INSTALL_PATH)
 
-all: thread
+all: thread  
 
 %.o : %.cpp
 	$(CXX) -c $^ $(CXXFLAGS) $(RELEASE_FLAGS) -o $@
@@ -55,14 +54,17 @@ all: thread
 	$(CXX) -c $^ $(CXXFLAGS) $(DEBUG_FLAGS) -o $@
 
 thread : thread.d.o
-	$(CXX) $^ -o $@ $(LDFLAGS) $(LIBS)
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
 lambda : lambda.d.o
-	$(CXX) $^ -o $@ $(LDFLAGS) $(LIBS)
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
+
+future : future.d.o
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
 
 clean:
-	rm -rf *.o 
+	rm -rf *.o *.exe 
 
 .PHONY : 
 
