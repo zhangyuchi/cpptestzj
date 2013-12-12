@@ -63,6 +63,9 @@ lambda : lambda.d.o
 future : future.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
+feature : feature.d.o
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
+
 
 clean:
 	rm -rf *.o *.exe 
