@@ -66,6 +66,8 @@ future : future.d.o
 feature : feature.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
+queen : queen.d.o
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
 clean:
 	rm -rf *.o *.exe 
