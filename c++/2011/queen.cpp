@@ -76,9 +76,14 @@ int64_t backtrackingsub(int N, int i)
 void backtracking_thr(std::atomic<int64_t>* total, int N, int i)
 {
   double start = now();
-  if (N % 2 == 1 && i == N / 2) {
+
+  printf("thread %d handle %d queen\n", i, N);
+  if (N % 2 == 1 && i == N / 2) 
+  {
     total->fetch_add(backtrackingsub(N, i));
-  } else {
+  } 
+  else 
+  {
     total->fetch_add(2*backtrackingsub(N, i));
   }
   double end = now();
