@@ -69,6 +69,10 @@ feature : feature.d.o
 queen : queen.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
+hurongdao : hurongdao.d.o
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
+
+
 clean:
 	rm -rf *.o *.exe 
 
