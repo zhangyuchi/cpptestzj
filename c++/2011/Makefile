@@ -75,6 +75,10 @@ hurongdao : hurongdao.d.o
 weird : weird.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
+meta : meta.d.o
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
+
+
 clean:
 	rm -rf *.o *.exe 
 
