@@ -72,6 +72,8 @@ queen : queen.d.o
 hurongdao : hurongdao.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
+weird : weird.d.o
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
 clean:
 	rm -rf *.o *.exe 
