@@ -6,8 +6,8 @@
 
 using namespace std;
 
-//volatile uint64_t value=0;
-uint64_t value=0;
+volatile uint64_t value=0;
+//uint64_t value=0;
 
 atomic<uint64_t> atomicvalue(0);
 
@@ -16,8 +16,9 @@ void counter(int id)
     uint64_t previous = 0, updated;
 
     for (;;) {
-        // updated = ++value;
-        updated = atomicvalue.fetch_add(1,std::memory_order_relaxed)+1;    
+        updated = ++value;                                                //from cache 
+        //updated = atomicvalue.fetch_add(1,std::memory_order_relaxed)+1;   //from memory 
+        //updated = atomicvalue.fetch_add(1,std::memory_order_release)+1;     //from memory
 
         if (previous >= updated) {
             cerr<<previous<<">="<<updated<<endl;
@@ -47,11 +48,11 @@ main(int argc, char *argv[])
 {
   thread c1(counter, 1);
   thread c2(counter, 2);
-  thread c3(counter, 3);
-  thread c4(counter, 4);
   thread m1(monitor, 100000000);
 
   m1.join();
+  c1.join();
+  c2.join();
 
   return 0;
 }
