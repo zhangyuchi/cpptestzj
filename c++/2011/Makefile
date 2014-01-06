@@ -45,8 +45,6 @@ DEBUG_OBJ := $(patsubst %.cpp, %.d.o, $(SRC))
 
 CXX := export LD_LIBRARY_PATH=${CXX11_HOME}/lib; ${CXX11_HOME}/bin/g++
 
-#LD_LIBRARY_PATH=/home/zhangjun-s/opt/gcc/lib:/home/zhangjun-s/opt/gcc/lib64:$(DEFAULT_LIB_INSTALL_PATH)
-
 all: thread  
 
 %.o : %.cpp
