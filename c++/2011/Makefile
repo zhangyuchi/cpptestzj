@@ -5,6 +5,7 @@ LIBVER_MAJOR = $(shell echo $(LIBVER) | cut -d. -f1)
 
 
 CXX11_HOME = /home/zhangjun-s/opt/gcc
+CXX11_HOME = /home/leipeng/opt
 
 CXXFLAGS := \
     -g3 \
@@ -42,9 +43,9 @@ SRC := $(foreach d, $(DIR), $(wildcard $(d)/*.cpp))
 RELEASE_OBJ := $(patsubst %.cpp, %.o, $(SRC))
 DEBUG_OBJ := $(patsubst %.cpp, %.d.o, $(SRC))
 
-CXX := ${CXX11_HOME}/bin/g++
+CXX := export LD_LIBRARY_PATH=${CXX11_HOME}/lib; ${CXX11_HOME}/bin/g++
 
-LD_LIBRARY_PATH=/home/zhangjun-s/opt/gcc/lib:/home/zhangjun-s/opt/gcc/lib64:$(DEFAULT_LIB_INSTALL_PATH)
+#LD_LIBRARY_PATH=/home/zhangjun-s/opt/gcc/lib:/home/zhangjun-s/opt/gcc/lib64:$(DEFAULT_LIB_INSTALL_PATH)
 
 all: thread  
 
@@ -69,7 +70,7 @@ feature : feature.d.o
 queen : queen.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
-hurongdao : hurongdao.d.o
+huarongdao : huarongdao.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
 weird : weird.d.o
