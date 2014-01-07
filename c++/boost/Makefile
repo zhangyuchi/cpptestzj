@@ -56,7 +56,7 @@ all: thread
 boost : testboost.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
-weird : weird.d.o
+variant : testvariant.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
 clean:
