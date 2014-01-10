@@ -14,6 +14,7 @@ int main()
     // !!! With this, the next loop runs faster
     // GCC 4.6.1 with -O3 or -ftree-vectorize on x64 is able to generate a conditional move. 
     // So there is no difference between the sorted and unsorted data - both are fast.
+    // http://stackoverflow.com/questions/11227809/why-is-processing-a-sorted-array-faster-than-an-unsorted-array
     
     std::sort(data, data + arraySize);
 
