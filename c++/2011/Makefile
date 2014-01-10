@@ -77,6 +77,10 @@ weird : weird.d.o
 meta : meta.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
+branchpredict : branchpredict.o
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
+
+
 
 clean:
 	rm -rf *.o *.exe 
