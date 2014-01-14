@@ -59,6 +59,9 @@ boost : testboost.d.o
 variant : testvariant.d.o
 	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
 
+any : testany.d.o
+	$(CXX) $^ -o $@.exe $(LDFLAGS) $(LIBS)
+
 clean:
 	rm -rf *.o *.exe 
 
