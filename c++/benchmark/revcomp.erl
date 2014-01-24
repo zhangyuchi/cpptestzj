@@ -17,63 +17,73 @@
 -define(WORKERS, 4).
 -define(BUFSIZE, 4096).
 
-main([_Args]) ->
-    
-    io:setopts([binary]),
-    run_parallel(),
-      halt().
+main([_Args]) ->    
+  Bt = erlang:now(),
+  io:setopts([binary]),
+  run_parallel(),
+  Et = erlang:now(),  
+  io:format("time is ~p~n", [timer:now_diff(Et, Bt)]),
+  halt().
 
 %% Set up one process for reading. Transformations and printing are
 %% handled asynchronously in separate processes.
 run_parallel() ->
-    register(reader, self()),
-    reader ! go,
-      loop(<< >>).
+  register(reader, self()),
+  reader ! go,
+  loop(<< >>).
 
 loop(Buf) ->
-      case get_line() of
+  Line = get_line(),
+
+  case Line of
     eof ->
-                    receive go ->
-                            ok end,
-                    spawn(fun() ->
-                                  flush(<< >>, Buf) end),
-                    receive go ->
-                            ok end;
-              << ">", _/bytes >> = Comment ->
+      receive 
+        go ->
+          ok 
+      end,
+
+      spawn(fun() -> flush(<< >>, Buf) end),
+      receive 
+        go ->
+          ok 
+      end;
+    << ">", _/bytes >> = Comment ->
       receive go -> ok end,
       spawn(fun() -> flush([Comment, $\n], Buf) end),
       loop(<< >>);
     Line ->
-      % Strip newline and append.
-%%       S = size(Line) - 1,
-%%       << Chunk:S/bytes, _ >> = Line,
+      %% Strip newline and append.
+      %%       S = size(Line) - 1,
+      %%       << Chunk:S/bytes, _ >> = Line,
       loop(<< Buf/binary, Line/binary >>)
   end.
 
 get_line() ->
-    Buf = case get(linebuf) of
-                    undefined -> <<>>;
-                    B -> B
-                               end,
-    case binary:split(Buf, <<"\n">>) of
-        [Line,Rest] ->
-                put(linebuf, Rest),
-                Line;
-        [_] ->
-                IsEOF = get(linebuf_eof) /= undefined,
-                if Buf==<<>>, IsEOF ->
-                            eof;
-                          true ->
-                            case file:read(standard_io, ?BUFSIZE) of
-                                eof ->
-                                        put(linebuf_eof, true),
-                                        get_line();
-                                {ok, Data} ->
-                                        put(linebuf, <<Buf/binary, Data/binary>>),
-                                        get_line()
-                                            end
-                                end
-    end.
+  Buf = case get(linebuf) of
+          undefined -> <<>>;
+          B -> B
+        end,
+
+  %%io:format("buf: ~p~n", [Buf]),
+  case binary:split(Buf, <<"\n">>) of
+    [Line,Rest] ->
+      put(linebuf, Rest),
+      Line;
+    [_] ->
+      IsEOF = get(linebuf_eof) /= undefined,
+      if Buf==<<>>, IsEOF ->
+          eof;
+         true ->
+          case file:read(standard_io, ?BUFSIZE) of
+            eof ->
+              put(linebuf_eof, true),
+              get_line();
+            {ok, Data} ->
+              put(linebuf, <<Buf/binary, Data/binary>>),
+              get_line()
+          end
+      end
+  end.
       
 
 
@@ -82,8 +92,8 @@ get_line() ->
 %% The results are collected, and printed in the correct order.
 flush(Comment, Buffer) ->
   register(collector, self()),
-  io:put_chars(reverse_complement(Buffer)),
-  io:put_chars(Comment),
+  reverse_complement(Buffer),
+  %%io:put_chars(Comment),
   unregister(collector),
   reader ! go.
 
