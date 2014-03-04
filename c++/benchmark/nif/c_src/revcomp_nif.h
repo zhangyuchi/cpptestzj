@@ -8,6 +8,7 @@ extern "C" {
 // Prototypes
     ERL_NIF_TERM doit_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
     ERL_NIF_TERM test_string(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
+    ERL_NIF_TERM test_pid(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
 }
 
 #endif

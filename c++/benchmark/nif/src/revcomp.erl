@@ -2,7 +2,7 @@
 
 -on_load(init/0).
 
--export([main/1, string/1, test/0]).
+-export([main/1, string/1, test/0, test_string/1, test_pid/1]).
 
 -define(BUFSIZE, 4096).
 
@@ -41,6 +41,9 @@ test() ->
   halt().
 
 test_string(_) ->
+  exit("NIF library not loaded").
+
+test_pid(_) ->
   exit("NIF library not loaded").
 
 doit(<< >>) ->

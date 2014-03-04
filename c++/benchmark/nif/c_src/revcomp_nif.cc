@@ -11,7 +11,8 @@ static ERL_NIF_TERM ATOM_ERROR;
 
 static ErlNifFunc nif_funcs[] = {
     {"doit", 1, doit_nif},
-    {"test_string", 1, test_string}
+    {"test_string", 1, test_string},
+    {"test_pid", 1, test_pid}
 };
 
 template <typename Acc> ERL_NIF_TERM fold(ErlNifEnv* env, ERL_NIF_TERM list,
@@ -48,7 +49,7 @@ ERL_NIF_TERM test_string(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
         unsigned char* orig_buf = orig_bin.data;
         size_t orig_len = orig_bin.size;
 
-        strcpy((char *)orig_buf, "zj");
+        strcpy((char *)orig_buf, "zj11111111111111111111111111111111111111111111111111111111111111111111111111111");
 
         ERL_NIF_TERM value;
         ERL_NIF_TERM ret;
@@ -58,7 +59,49 @@ ERL_NIF_TERM test_string(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
         //return enif_make_binary(env, &reply);
         //return value;
         ret = enif_make_int(env,orig_len);
-        return enif_make_tuple2(env, argv[0], enif_make_binary(env, &orig_bin));
+        return enif_make_tuple3(env, ret, argv[0], enif_make_binary(env, &orig_bin));
+    }
+    else 
+    {
+        return enif_make_badarg(env);
+    }
+}
+
+struct thread_ctx
+{
+    ErlNifPid to_pid;
+    ErlNifEnv* to_env;
+};
+
+void* thread_run(void *arg) 
+{
+    thread_ctx* ctx = (thread_ctx *)arg;
+
+    enif_send(NULL, &ctx->to_pid, ctx->to_env, enif_make_tuple2(ctx->to_env, ATOM_OK, enif_make_int(ctx->to_env,0)));
+    enif_free_env(ctx->to_env);
+    return NULL;
+}
+
+ERL_NIF_TERM test_pid(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+    char name[4096];
+
+    printf("test_pid env is %p\n", env);
+
+    if (enif_is_pid(env, argv[0]))
+    {
+        thread_ctx* ctx = (thread_ctx *)malloc(sizeof(thread_ctx));
+
+        //enif_get_local_pid(env, argv[0], &(ctx->to_pid));
+        enif_self(env, &ctx->to_pid);
+        ErlNifEnv* myenv = enif_alloc_env();
+        ctx->to_env = myenv;//(ErlNifEnv *)enif_priv_data();
+        
+        ErlNifTid tid;
+        enif_thread_create("loop", &tid, thread_run, ctx, NULL);
+
+        //return enif_make_string(env, name, ERL_NIF_LATIN1);
+        return enif_make_tuple2(env, ATOM_OK, argv[0]);
     }
     else 
     {
@@ -96,6 +139,11 @@ static int on_load(ErlNifEnv* env, void** priv_data, ERL_NIF_TERM load_info)
     ATOM(ATOM_OK, "ok");
     ATOM(ATOM_ERROR, "error");
     ATOM(ATOM_TRUE, "true");
+
+    //ErlNifEnv* myenv = enif_alloc_env();
+    //*priv_data = (void *)myenv;
+
+    printf("load env is %p\n", env);
 
     return 0;
 }
