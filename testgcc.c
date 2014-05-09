@@ -14,38 +14,34 @@ struct bar
   int x[2]; 
 } __attribute__ ((packed));
 
-void noinvoke() __attribute__ ((warning ("af")));
-void noinvoke() 
+void __attribute__ ((warning ("af"))) noinvoke() 
 {
   printf("noinvoke\n");
 }
 
-void begin() __attribute__ ((constructor (101)));
-void begin()
+
+void __attribute__ ((constructor (101))) begin()
 {
   printf("begin\n");
 }
 
-void second() __attribute__ ((constructor (102)));
-void second()
+void __attribute__ ((constructor (102))) second()
 {
   printf("second\n");
 }
 
-void end() __attribute__ ((destructor));
-void end()
+void __attribute__ ((destructor)) end()
 {
   printf("end\n");
 }
 
-void * my_memcpy (void *dest, const void *src, size_t len) __attribute__((nonnull (1, 2)));
-void * my_memcpy (void *dest, const void *src, size_t len) 
+
+void * __attribute__((nonnull (1, 2))) my_memcpy (void *dest, const void *src, size_t len) 
 {
   return  memcpy(dest, src, len);
 }
 
-void fatal () __attribute__ ((noreturn));
-void fatal ()
+void __attribute__ ((noreturn)) fatal ()
 {
   printf("hello fatal\n"); 
   //_exit(1);
