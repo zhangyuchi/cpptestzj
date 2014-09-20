@@ -98,10 +98,14 @@ int main()
 	bool Bs;
 	printf("bool size is %ld\n", sizeof(Bs) );
 
-    int nullsize = 0;
-    char nullbuf[nullsize];
+  int nullsize = 0;
+  char nullbuf[nullsize];
+  printf("nullbuf size is %ld\n", sizeof(nullbuf) );
 
-    printf("nullbuf size is %ld\n", sizeof(nullbuf) );
+  char numbuf[16];
+  char *numstr = numbuf;
+  sprintf(numbuf, "%d", 1234);
+  printf("numbuf size is %ld, numstr size is %ld\n", sizeof(numbuf), sizeof(numstr) );
 
 	return 0; 
 }

@@ -5,7 +5,7 @@ LIBVER_MAJOR = $(shell echo $(LIBVER) | cut -d. -f1)
 
 
 CXX11_HOME = /home/zhangjun-s/opt/gcc
-CXX11_HOME = /home/leipeng/opt
+#CXX11_HOME = /home/leipeng/opt
 
 CXXFLAGS := \
     -g3 \
@@ -16,8 +16,9 @@ CXXFLAGS := \
     -time \
     -Wno-parentheses \
     -Wdeprecated-declarations \
-    -fmerge-all-constants \
     -I $(CXX11_HOME)/include 
+
+    #-fmerge-all-constants 
 
 RELEASE_FLAGS := \
 	-O3 \
