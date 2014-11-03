@@ -19,6 +19,7 @@
 #include <string>
 #include <tr1/unordered_map>
 #include <iostream>
+#include "portable.h"
 
 using namespace std;
 using namespace std::tr1;
@@ -32,6 +33,8 @@ int main()
     size_t hash = hasher(s);
 
     cout<<hash<<endl;
+    
+    cout<<"gcc ver="<<__GNUC__<<endl;
 
     return 0;
 }
