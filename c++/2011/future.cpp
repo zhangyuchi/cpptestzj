@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 #include <future>
 
 using namespace std;
@@ -19,7 +19,7 @@ int main()
     int result2 = calc2();
     // // wait for calc1() and add its result to result2
     int result = result1.get() + result2;
-    cout << "calc1()+calc2(): " << result << endl;
+    //cout << "calc1()+calc2(): " << result << endl;
     return 0;
 }
 

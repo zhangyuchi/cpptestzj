@@ -17,6 +17,8 @@
  */
 
 #include <map>
+#include <tr1/unordered_map>
+#include <tr1/tuple>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -79,6 +81,15 @@ int main()
     {
         uit->second.print();
     }
+  
+    std::tr1::unordered_map<int, int> intmap;
+    bool is_insert;
+    std::tr1::tie(std::tr1::ignore, is_insert) = intmap.insert(std::make_pair(1, 1));
+    std::cout<<"insert 1,1 ret="<<is_insert<<" value="<<intmap[1]<<std::endl;
+    std::tr1::tie(std::tr1::ignore, is_insert) = intmap.insert(std::make_pair(1, 2));
+    std::cout<<"insert 1,2 ret="<<is_insert<<" value="<<intmap[1]<<std::endl;
+    std::tr1::tie(std::tr1::ignore, is_insert) = intmap.insert(std::make_pair(1, 3));
+    std::cout<<"insert 1,3 ret="<<is_insert<<" value="<<intmap[1]<<std::endl;
 
     return 0;
 }

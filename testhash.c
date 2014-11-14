@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include "portable.h"
 
 uint64_t hash_o2o(uint8_t *str, uint32_t len, uint64_t max)
 {
@@ -43,6 +44,8 @@ int main(int argc, char **argv)
     uint64_t h = hash_o2o(argv[1], strlen(argv[1]), 1000);
 
     printf("%lu\n", h);
+
+    printf("gcc ver=%d\n", __GNUC__);
 
     return 0;
 }
