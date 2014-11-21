@@ -1,6 +1,7 @@
 #include <memory>
 #include <iostream>
 #include <vector>
+#include <array>
 
 using namespace std;
 
@@ -16,7 +17,18 @@ private:
 class Test
 {
 public: 
-  Test(int n):num_(n){cout<<"Test"<<endl;}
+  Test()
+    :num_(0)
+  {
+    cout<<"Test:"<<0<<endl;
+  }
+  
+  Test(int n)
+    :num_(n)
+  {
+    cout<<"Test:"<<n<<endl;
+  }
+
   ~Test(){cout<<"~Test:"<<this<<endl;}
 
   Test(const Test& r)
@@ -69,8 +81,15 @@ int main()
   {
     unique_ptr<Test> pT = make_unique<Test>(11);
   }
-  //{unique_ptr<Test[]> pTA = unique_ptr<Test[]>(new Test[3]);}
-  //{unique_ptr<Test[]> pTA1 = make_unique<Test[]>(3);}
+
+  {
+    //unique_ptr<array<Test,3>> pTA = unique_ptr<array<Test,3>>( new array<Test,3> {12,12,12} );
+  }
+  
+  {
+    unique_ptr<Test[]> pTA1 = make_unique<Test[]>(3);
+  }
+
   {
     unique_ptr<vector<Test>> pTA1 = make_unique<vector<Test>>(3,13);
   }
