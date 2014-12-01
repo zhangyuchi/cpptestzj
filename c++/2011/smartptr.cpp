@@ -100,5 +100,7 @@ int main()
     vec.emplace_back(move(e));
   }  
 
+  cout<<__cplusplus<<endl;
+
   return 0;
 }

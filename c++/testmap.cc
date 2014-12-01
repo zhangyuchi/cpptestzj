@@ -24,6 +24,8 @@
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
+using namespace std;
+
 struct uin
 {
     uin(const std::string& name )
@@ -46,8 +48,42 @@ struct uin
     }
 };
 
+class Value
+{
+public:
+  Value():value(255){}
+
+public:  
+  int value;
+};
+
+class State
+{
+public:
+  State(){}
+  int& state(int n)
+  {
+    return states[n].value;
+  } 
+
+  void print(int n)
+  {
+     for(int i=0; i<10; ++i)
+            cout<<states[i].value<<endl; 
+  }
+
+private:  
+  map<int,Value> states;
+};
+
+auto getstate(auto i)
+{
+  return i;
+}
+
 int main()
 {
+  {
     uin id1("zhangjun/pc");
     uin id2("zhangjun/mobile");
 
@@ -90,7 +126,30 @@ int main()
     std::cout<<"insert 1,2 ret="<<is_insert<<" value="<<intmap[1]<<std::endl;
     std::tr1::tie(std::tr1::ignore, is_insert) = intmap.insert(std::make_pair(1, 3));
     std::cout<<"insert 1,3 ret="<<is_insert<<" value="<<intmap[1]<<std::endl;
+  }
+  { 
+    std::map<int, string> strmap;
+    for(int i=0; i<10; ++i)
+      cout<<strmap[i].size()<<endl;
+  }
 
-    return 0;
+  cout<<"----------------------------------"<<endl;
+
+  {
+    State s;
+    s.print(10);
+
+    for(int i=0; i<10; ++i)
+      s.state(i) = i;
+
+    cout<<"================================"<<endl;
+    s.print(10);
+  }
+
+  {
+    cout<<getstate(1.23)<<endl;
+  }
+
+  return 0;    
 }
 
