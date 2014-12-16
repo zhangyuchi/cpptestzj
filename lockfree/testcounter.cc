@@ -16,12 +16,12 @@ void counter(int id)
     uint64_t previous = 0, updated;
 
     for (;;) {
-        updated = ++value;                                                //from cache 
-        //updated = atomicvalue.fetch_add(1,std::memory_order_relaxed)+1;   //from memory 
-        //updated = atomicvalue.fetch_add(1,std::memory_order_release)+1;     //from memory
+        updated = value++; //if taskset cpu, result:good,won't get old value //from cache 
+        //updated = atomicvalue.fetch_add(1,std::memory_order_relaxed);   //from memory 
+        //updated = atomicvalue.fetch_add(1,std::memory_order_release);   //from memory
 
-        if (previous >= updated) {
-            cerr<<previous<<">="<<updated<<endl;
+        if (previous > updated) {
+            cerr<<previous<<">"<<updated<<endl;
             exit(EXIT_FAILURE);
         }
         
