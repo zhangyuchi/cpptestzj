@@ -27,7 +27,8 @@
 BOOST_MPL_HAS_XXX_TRAIT_DEF(iterator)
 
 template<typename V>
-typename boost::disable_if<has_iterator<V>, void >::type print(V& v )
+typename boost::disable_if<has_iterator<V>, void >::type 
+print(V& v )
 {
     std::cout<<v<<std::endl;
 }
@@ -39,7 +40,8 @@ void print(std::pair<V1,V2>& v )
 }
 
 template<class C>
-typename boost::enable_if<has_iterator<C>, void >::type print( C& cs )
+typename boost::enable_if<has_iterator<C>, void >::type 
+print( C& cs )
 {
     typename C::iterator it = cs.begin();
     for( ;it != cs.end(); ++it )
