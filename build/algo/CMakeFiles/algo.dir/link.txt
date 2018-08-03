@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wno-deprecated-declarations -Wall -std=c++11 -Wextra -Wcast-align -Wwrite-strings -Wsign-compare -Winvalid-pch -Wno-parentheses -fmerge-all-constants -g3  -rdynamic CMakeFiles/algo.dir/main.cpp.o  -o ../bin/algo 

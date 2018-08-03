@@ -11,11 +11,5 @@ cmake_policy(SET CMP0015 NEW)
 
 SET(CMAKE_VERBOSE_MAKEFILE on)
 
-SET(CMAKE_CXX_FLAGS "-Wno-deprecated-declarations -Wall -std=c++11 -Wextra -Wcast-align -Wwrite-strings -Wsign-compare -Winvalid-pch -Wno-parentheses -fmerge-all-constants -g3")
-SET(CMAKE_CXX_FLAGS_RELEASE "-O2")
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+add_subdirectory(algo)
 
-AUX_SOURCE_DIRECTORY(algo ALGOSRCS)
-
-
-ADD_EXECUTABLE(algo ${ALGOSRCS})

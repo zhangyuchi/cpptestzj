@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home2/zhangjun/Projects/cpptestzj/algo/insertsort.h
+
+/home2/zhangjun/Projects/cpptestzj/algo/main.cpp
+stdio.h
+-
+quicksort.h
+/home2/zhangjun/Projects/cpptestzj/algo/quicksort.h
+insertsort.h
+/home2/zhangjun/Projects/cpptestzj/algo/insertsort.h
+
+/home2/zhangjun/Projects/cpptestzj/algo/quicksort.h
+
