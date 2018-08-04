@@ -16,17 +16,30 @@ public:
 
 private:
     void partition(int *input, int len, int& pos){
-
+        
     }
 
     void sort(int* input, int len){
-      int pos;
-      partition(input, len, pos);
-      if (pos == len - 1){
+        if (len == 1)
+            return;
+        if (len == 2){
+            if (input[0] > input[1]){
+                int tmp = input[0];
+                input[0] = input[1];
+                input[1] = tmp;
+            }
+            return;
+        }
+
+        int pos;
+        partition(input, len, pos);
+        if (pos == len){
+            return;
+        }
+            
+        sort(input, pos);
+        sort(input+pos, len-pos);
         return;
-      }else{
-        
-      }
     }
 
 };
