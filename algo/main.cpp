@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "quicksort.h"
 #include "insertsort.h"
+#include "invertlist.h"
 
 //raft, fast raft. leveldb, rocksdb
 int print_vec(const std::vector<int> &data){

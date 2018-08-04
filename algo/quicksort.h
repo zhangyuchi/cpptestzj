@@ -21,10 +21,20 @@ private:
         int end=len-1; 
         while (true)
         {
+            while ( start<=len-1 && input[start] <= input[0])
+                ++start;
+            while ( end > 0 && input[end] > input[0] )
+                --end;
             
-            /* code */
-        }
-        
+            if (end < start){
+                pos = start;
+                break;
+            }
+
+            int tmp = input[start];
+            input[start] = input[end];
+            input[end] = tmp;
+        }        
     }
 
     void sort(int* input, int len){
