@@ -27,6 +27,13 @@ private:
                 --end;
             
             if (end < start){
+                for (int i=1; i<end; ++i){
+                    if(input[i]<input[0]){
+                        int tmp = input[i];
+                        input[i] = input[0];
+                        input[0] = tmp;
+                    }
+                }
                 pos = start;
                 break;
             }
