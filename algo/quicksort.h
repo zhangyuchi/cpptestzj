@@ -15,7 +15,15 @@ public:
     }
 
 private:
+    //pos is first big than input[0]
     void partition(int *input, int len, int& pos){
+        int start=1;
+        int end=len-1; 
+        while (true)
+        {
+            
+            /* code */
+        }
         
     }
 
