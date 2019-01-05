@@ -27,4 +27,4 @@ endif()
 ## pthread
 find_package(Threads REQUIRED)
 include_directories(.)
-add_executable (functiontest ConsoleApplication11.cpp)
+add_executable (functiontest functiontest.cpp)
