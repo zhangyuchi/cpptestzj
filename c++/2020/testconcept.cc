@@ -1,11 +1,14 @@
-#include<concepts>
+#include <concepts>
 
 struct S{
    int x;
 };
 
-template<class T>
-requires std::equality_comparable<T>
+template <typename T>
+concept haveEqic = requires std::equality_comparable<T>;
+
+
+template<haveEqic T>
 bool do_magic(T a, T b){
     return a == b;
 }
