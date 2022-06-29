@@ -5,7 +5,7 @@ struct S{
 };
 
 template <typename T>
-concept haveEqic = requires std::equality_comparable<T>;
+concept haveEqic = std::equality_comparable<T>;
 
 
 template<haveEqic T>
